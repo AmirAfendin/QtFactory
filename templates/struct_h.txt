@@ -1,0 +1,15 @@
+#ifndef [qtf_structName_allCapital]_H
+#define [qtf_structName_allCapital]_H
+
+[qtf_includes]
+
+struct [qtf_structName]
+{
+    [qtf_structName]([qtf_constructorList])
+        : [qtf_constructorAssignmentList]
+    {}
+
+    [qtf_members]
+};
+
+#endif // [qtf_structName_allCapital]_H

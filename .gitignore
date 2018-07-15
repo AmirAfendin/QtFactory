@@ -1,0 +1,32 @@
+*.autosave
+*~
+
+# C++ objects and libs
+
+*.slo
+*.lo
+*.o
+*.a
+*.la
+*.lai
+*.so
+*.so.1
+*.dylib
+
+# Qt-es
+
+*.pro.user
+*.pro.user.*
+moc_*.cpp
+qrc_*.cpp
+Makefile
+*-build-*
+build-*
+
+# OS X
+
+.DS_Store
+
+# Java
+
+local.properties
