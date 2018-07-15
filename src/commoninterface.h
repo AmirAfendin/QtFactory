@@ -5,6 +5,8 @@
 
 #include "qqmlhelpers.h"
 #include "membermodel.h"
+#include "structbuilder.h"
+#include "modelbuilder.h"
 
 #define TEMPLATE_FILE_STRUCT_H "./templates/struct_h.txt"
 #define RESULT_FILE_STRUCT_H "./struct.h"
@@ -20,17 +22,12 @@ public:
     MemberModel* memberModel() { return m_memberModel; }
 
 public slots:
-    void generateSources();
+    void buildSources();
 
 private:
     MemberModel *m_memberModel;
-    bool m_hasOtherTypes;
-    void generateStruct();
-    QString getStructTemplateString();
-    void fillName(QString &outTemplateString);
-    void fillIncludes(QString &outTemplateString);
-    void fillConstructors(QString &outTemplateString);
-    void fillMembers(QString &outTemplateString);
+    StructBuilder m_structBuilder;
+    ModelBuilder m_modelBuilder;
 };
 
 #endif // COMMONINTERFACE_H

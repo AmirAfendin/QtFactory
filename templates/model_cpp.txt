@@ -1,0 +1,64 @@
+#include "[qtf_modelName_allLowercase].h"
+
+MemberModel::MemberModel(QObject *parent)
+    : QAbstractListModel(parent)
+{
+}
+
+int MemberModel::rowCount(const QModelIndex &parent) const
+{
+    Q_UNUSED(parent)
+    return m_[qtf_structName_allLowercase]List.count();
+}
+
+QVariant MemberModel::data(const QModelIndex &index, int role) const
+{
+    int row = index.row();
+    if (row < 0 || row >= m_[qtf_structName_allLowercase]List.count())
+        return QVariant();
+
+    switch (role) {
+    [qtf_dataCases]
+    }
+
+    return QVariant();
+}
+
+bool MemberModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    int row = index.row();
+    if (row < 0 || row >= m_[qtf_structName_allLowercase]List.count())
+        return false;
+
+    switch (role) {
+    [qtf_setDataCases]
+    }
+
+    emit dataChanged(createIndex(row, 0, nullptr), createIndex(row, 0, nullptr));
+    return true;
+}
+
+void MemberModel::insetElement(int index)
+{
+    if (index < 0)
+	index = 0;
+    if (index >  m_[qtf_structName_allLowercase]List.count())
+	index = m_[qtf_structName_allLowercase]List.count();
+    beginInsertRows(QModelIndex(), index, index);
+    m_[qtf_structName_allLowercase]List << [qtf_structName]();
+    endInsertRows();
+}
+
+void MemberModel::removeElement(int index)
+{
+    beginRemoveRows(QModelIndex(), index, index);
+    m_members.removeAt(index);
+    endRemoveRows();
+}
+
+QHash<int, QByteArray> MemberModel::roleNames() const
+{
+    QHash<int, QByteArray> roles;
+    [qtf_qmlRoles]
+    return roles;
+}

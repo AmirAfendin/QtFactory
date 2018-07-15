@@ -1,0 +1,30 @@
+#ifndef [qtf_modelName_allCapital]_H
+#define [qtf_modelName_allCapital]_H
+
+#include <QAbstractListModel>
+#include "structures/[qtf_structName_allLowercase].h"
+
+class [qtf_modelName] : public QAbstractListModel
+{
+    Q_OBJECT
+public:
+    [qtf_roles]
+
+    [qtf_modelName](QObject *parent = nullptr);
+
+    int rowCount(const QModelIndex &parent) const;
+    QVariant data(const QModelIndex &index, int role) const;
+    bool setData(const QModelIndex &index, const QVariant &value, int role);
+
+public slots:
+    void insertElement(int index);
+    void removeElement(int index);
+
+protected:
+    QHash<int, QByteArray> roleNames() const;
+
+private:
+    QList<[qtf_structName]> m_[qtf_structName_allLowercase]List;
+};
+
+#endif // [qtf_modelName_allCapital]_H
