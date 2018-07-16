@@ -1,27 +1,29 @@
 #include "structbuilder.h"
 #include <QFile>
 #include <QTextStream>
+#include <QDebug>
 
 StructBuilder::StructBuilder(QObject *parent) : QObject(parent)
 {
     m_hasOtherTypes = false;
 }
 
-bool StructBuilder::build(QString templatePath, QString resultPath)
+bool StructBuilder::build(const QString &templatePath, const QString &resultPath, const QString &structName,
+                          const QStringList &memberList)
 {
     QString templateString = getStructTemplateString(templatePath);
     if (templateString.isEmpty())
         return false;
 
-    fillName(templateString);
-    fillMembers(templateString);
+    fillName(templateString, structName);
+    fillMembers(templateString, memberList);
     fillIncludes(templateString);
-    fillConstructors(templateString);
+    fillConstructors(templateString, memberList);
 
     return saveResult(resultPath, templateString);
 }
 
-QString StructBuilder::getStructTemplateString(QString templatePath)
+QString StructBuilder::getStructTemplateString(const QString &templatePath)
 {
     QFile structTemplate(templatePath);
     if (!structTemplate.open(QIODevice::ReadOnly | QIODevice::Text)){
@@ -34,10 +36,10 @@ QString StructBuilder::getStructTemplateString(QString templatePath)
     return structTemplateString;
 }
 
-void StructBuilder::fillName(QString &outTemplateString)
+void StructBuilder::fillName(QString &outTemplateString, const QString &structName)
 {
-    outTemplateString.replace("[qtf_structName_allCapital]", QString(m_structName).toUpper());
-    outTemplateString.replace("[qtf_structName]", m_structName);
+    outTemplateString.replace("[qtf_structName_allCapital]", QString(structName).toUpper());
+    outTemplateString.replace("[qtf_structName]", structName);
 
 }
 
@@ -49,9 +51,8 @@ void StructBuilder::fillIncludes(QString &outTemplateString)
         outTemplateString.replace("[qtf_includes]", "");
 }
 
-void StructBuilder::fillConstructors(QString &outTemplateString)
+void StructBuilder::fillConstructors(QString &outTemplateString, const QStringList &memberList)
 {
-    QStringList memberList = m_memberModel->getMemberList();
 
     int argumentLineCount = 1, assignmentLineCount = 1;
     QString argumentList, assignmentList, argument, assignment;
@@ -86,11 +87,9 @@ void StructBuilder::fillConstructors(QString &outTemplateString)
     outTemplateString.replace("[qtf_constructorAssignmentList]", assignmentList);
 }
 
-void StructBuilder::fillMembers(QString &outTemplateString)
+void StructBuilder::fillMembers(QString &outTemplateString, const QStringList &memberList)
 {
     m_hasOtherTypes = false;
-
-    QStringList memberList = m_memberModel->getMemberList();
 
     QString memberString, member;
     QString indent("    ");
@@ -111,7 +110,7 @@ void StructBuilder::fillMembers(QString &outTemplateString)
     outTemplateString.replace("[qtf_members]", memberString);
 }
 
-bool StructBuilder::saveResult(QString resultPath, QString templateString)
+bool StructBuilder::saveResult(const QString &resultPath, const QString &templateString)
 {
     QFile structResult(resultPath);
     if (!structResult.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)){

@@ -9,8 +9,11 @@
 #include "modelbuilder.h"
 
 #define TEMPLATE_FILE_STRUCT_H "./templates/struct_h.txt"
+#define TEMPLATE_FILE_MODEL_H "./templates/model_h.txt"
+#define TEMPLATE_FILE_MODEL_CPP "./templates/model_cpp.txt"
 #define RESULT_FILE_STRUCT_H "./struct.h"
-#define MAX_CONSTRUCTOR_ARG_LENGTH 60
+#define RESULT_FILE_MODEL_H "./model.h"
+#define RESULT_FILE_MODEL_CPP "./model.cpp"
 
 
 class CommonInterface : public QObject

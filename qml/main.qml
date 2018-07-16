@@ -86,7 +86,7 @@ ApplicationWindow {
             text: qsTr("Generate sources")
             onClicked: {
                 commonInterface.structName = structNameTF.text
-                commonInterface.generateSources()
+                commonInterface.buildSources()
             }
         }
     }

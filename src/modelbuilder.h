@@ -9,9 +9,12 @@ class ModelBuilder : public QObject
 public:
     explicit ModelBuilder(QObject *parent = nullptr);
 
-signals:
+    bool build(const QString &templatePath, const QString &resultPath,
+               const QString &structName, const QStringList &memberList);
 
-public slots:
+private:
+    QString getModelTemplateString(const QString &templatePath);
+    void fillName(QString &outTemplateString, const QString &modelName);
 };
 
 #endif // MODELBUILDER_H

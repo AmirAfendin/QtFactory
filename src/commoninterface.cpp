@@ -11,9 +11,14 @@ CommonInterface::CommonInterface(QObject *parent) : QObject(parent)
 
 void CommonInterface::buildSources()
 {
-    if (m_structBuilder.build(TEMPLATE_FILE_STRUCT_H, RESULT_FILE_STRUCT_H))
+    bool success = m_structBuilder.build(TEMPLATE_FILE_STRUCT_H, RESULT_FILE_STRUCT_H,
+                                         m_structName, m_memberModel->getMemberList());
+    if (success) {
         qDebug() << tr("Structure builded");
-    else
+    } else {
         qDebug() << tr("Failed to build struct");
-    generateStruct();
+        return;
+    }
+
+    success = m_modelBuilder.build(TEMPLATE_FILE_MODEL_H, RESULT_FILE_MODEL_H);
 }
